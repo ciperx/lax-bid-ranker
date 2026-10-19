@@ -59,7 +59,9 @@ const round2 = (n: number): number => Math.round(n * 100) / 100;
 
 export function priceScore(priceUsdc: number, ceilingUsdc: number, weight: number): number {
   if (!(ceilingUsdc > 0)) return 0;
-  return clamp(1 - priceUsdc / ceilingUsdc) * weight;
+  // A missing, negative or NaN price is not a cheap bid, it is an invalid one.
+  if (!Number.isFinite(priceUsdc) || priceUsdc < 0) return 0;
+  return clamp(1 - Math.min(priceUsdc, ceilingUsdc) / ceilingUsdc) * weight;
 }
 
 export function approachScore(bid: Bid, weight: number): number {
@@ -127,7 +129,7 @@ export function rankBids(
       tier: tierScore(record, weights.tier),
     };
     const total = round2(parts.price + parts.approach + parts.record + parts.tier);
-    return { bid, total, parts, tested: bid.has_tests === true };
+    return { bid, total, parts, tested: Boolean(bid.has_tests) };
   });
 
   // Hard rule: a tested bid always outranks an untested one, at any price.

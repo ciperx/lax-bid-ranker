@@ -146,3 +146,25 @@ describe("rankBids", () => {
     expect(rankBids(bundle, [], [])).toEqual([]);
   });
 });
+
+describe("has_tests truthiness and bad prices", () => {
+  it("treats a truthy non boolean has_tests as tested in the hard rule", () => {
+    const bundleWithCeiling = { ceiling_usdc: 100 };
+    const bids = [
+      { bid_id: "truthy-6", price_usdc: 60, approach: "x".repeat(60), has_tests: "yes" as unknown as boolean, test_count: 6 },
+      { bid_id: "real-1", price_usdc: 20, approach: "x".repeat(60), has_tests: true, test_count: 1 },
+    ];
+    const ranked = rankBids(bundleWithCeiling, bids as never, []);
+    expect(ranked[0].bid_id).toBe("truthy-6");
+  });
+
+  it("scores a negative or NaN price as zero rather than as the cheapest bid", () => {
+    expect(priceScore(-5, 100, 40)).toBe(0);
+    expect(priceScore(Number.NaN, 100, 40)).toBe(0);
+    expect(priceScore(50, 100, 40)).toBeCloseTo(20, 5);
+  });
+
+  it("clamps a price above the ceiling to a zero price score", () => {
+    expect(priceScore(150, 100, 40)).toBe(0);
+  });
+});

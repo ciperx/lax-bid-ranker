@@ -51,7 +51,7 @@ Score, then the cheaper bid, then `bid_id` in ascending order. The tiebreak is t
 ## Files
 
 - `src/rank.ts`, the types and the pure rules.
-- `test/rank.test.ts`, 18 tests including the permutation check, the hard rule, the reason length floor and the weight override.
+- `test/rank.test.ts`, 21 tests including the permutation check, the hard rule, the reason length floor and the weight override.
 
 ## House rules honoured
 
