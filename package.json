@@ -1,0 +1,17 @@
+{
+  "name": "lax-bid-ranker",
+  "version": "1.0.0",
+  "description": "Deterministic tender bid ranking for LAX seats: price against ceiling, approach with tests, record and Cerberus tier, one written reason per bid.",
+  "type": "module",
+  "main": "dist/rank.js",
+  "types": "dist/rank.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
+  }
+}
