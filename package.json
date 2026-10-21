@@ -1,0 +1,13 @@
+{
+  "name": "@ciperx/lax-bid-ranker",
+  "version": "1.0.0",
+  "description": "Deterministic ranking of LAX tender bids by price against the ceiling, approach quality, track record and Cerberus tier, with one reason per bid.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist", "README.md"],
+  "engines": {"node": ">=20"},
+  "scripts": {"build": "tsc -p tsconfig.json", "test": "npm run build && node --test test/*.test.js"},
+  "devDependencies": {"@types/node": "^22.10.0", "typescript": "^5.7.0"}
+}
